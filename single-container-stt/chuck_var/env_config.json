@@ -1,5 +1,5 @@
 {
-  "allowDashboard": false,
+  "allowDashboard": true,
   "anonymizeLogs": false,
   "baseModelsSURL": {
     "service": "localPath",
@@ -11,14 +11,14 @@
       "component": "runtime",
       "group": "default",
       "models": [
-        "en-US_Multimedia",
-        "fr-FR_Multimedia"
+        "ja-JP_Multimedia",
+        "en-US_Multimedia"
       ]
     }
   },
-  "defaultSTTModel": "en-US_Multimedia",
+  "defaultSTTModel": "ja-JP_Multimedia",
   "defaultVerbosity": "DEBUG",
-  "meteringEnabled": false,
+  "meteringEnabled": true,
   "requireCookies": false,
   "setCookies": false,
   "serviceDependencies": {
