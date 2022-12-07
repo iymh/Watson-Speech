@@ -140,7 +140,7 @@ https://www.ibm.com/jp-ja/partnerworld/program/embeddableai-jp
   </div>
 
   * コンテナでWebサーバが起動されています
-  * "http://localhost:1080/"で接続確認をします
+  * "http://localhost:1080/" で接続確認をします
   <div>
     <img src="docker_4.jpg" width="80%">
   </div>
