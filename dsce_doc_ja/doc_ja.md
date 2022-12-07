@@ -151,6 +151,9 @@ https://www.ibm.com/jp-ja/partnerworld/program/embeddableai-jp
   <img src="git_3.jpg" width="80%">
 </div>
 
+* https://www.ibm.com/docs/en/watson-libraries?topic=wtsleh-models-catalog
+  * "ja-JP_EmiV3Voice" : "cp.icr.io/cp/ai/watson-tts-ja-jp-emiv3voice:1.0.0"
+
 * "Dockerfile"
   ```
   # Add additional models here
