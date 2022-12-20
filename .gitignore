@@ -1,3 +1,4 @@
 Text To Speech/.DS_Store
 STTApplication/target/
 .vscode/settings.json
+node_modules

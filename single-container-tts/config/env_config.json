@@ -12,11 +12,11 @@
       "group": "default",
       "models": [
         "en-US_MichaelV3Voice",
-	"fr-CA_LouiseV3Voice"
+	      "ja-JP_EmiV3Voice"
       ]
     }
   },
-  "defaultTTSVoice": "en-US_MichaelV3Voice",
+  "defaultTTSVoice": "ja-JP_EmiV3Voice",
   "defaultVerbosity": "INFO",
   "meteringEnabled": true,
   "requireCookies": false,

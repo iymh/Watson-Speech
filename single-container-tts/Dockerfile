@@ -2,7 +2,7 @@
 FROM cp.icr.io/cp/ai/watson-tts-generic-models:1.0.0 AS catalog
 # Add additional models here
 FROM cp.icr.io/cp/ai/watson-tts-en-us-michaelv3voice:1.0.0 AS en-us-voice
-FROM cp.icr.io/cp/ai/watson-tts-fr-ca-louisev3voice:1.0.0 AS fr-ca-voice
+FROM cp.icr.io/cp/ai/watson-tts-ja-jp-emiv3voice:1.0.0 AS ja-jp-voice
 
 # Base image for the runtime
 FROM cp.icr.io/cp/ai/watson-tts-runtime:1.0.0 AS runtime
@@ -22,7 +22,7 @@ RUN sudo mkdir -p /models/pool2
 
 # For each additional models, copy the line below with the model image
 COPY --chown=watson:0 --from=en-us-voice model/* /models/pool2/
-COPY --chown=watson:0 --from=fr-ca-voice model/* /models/pool2/
+COPY --chown=watson:0 --from=ja-jp-voice model/* /models/pool2/
 
 # Run script to initialize the model cache from the model archives
 COPY ./prepareModels.sh .

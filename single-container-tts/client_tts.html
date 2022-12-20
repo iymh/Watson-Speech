@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watson Library TTS</title>
+</head>
+
+<body>
+  <div id="app">
+    <v-app>
+      <v-app-bar app>
+        <v-app-bar-title >Text to Speech</v-app-bar-title>
+      </v-app-bar>
+
+      <v-main>
+        <v-container>
+          <v-row>
+            <v-col class="col-8">
+              <v-select
+                label="Voice"
+                outlined
+                dense
+                :items="voice_items"
+                item-text="name"
+                item-value="name"
+                v-model="voice_selected"
+                return-object
+              ></v-select>
+            </v-col>
+            <v-col class="col-4">
+              <v-btn 
+                tile color="primary"
+                elevation="1"
+                rounded
+                :loading="voice_loading"
+                @click="onGetVoiceBtn()">
+                <v-icon left>mdi-web</v-icon>
+                <span>Voice List</span>
+              </v-btn>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col class="col-8">
+              <v-combobox
+                class="flex-grow-1 ma_lr_1rem ma_tp_05rem"
+                v-model="send_text"
+                :items="send_text_samples"
+                label="読み上げ文字列"
+                outlined
+                clearable
+                counter
+                dense
+                rows="1"
+              ></v-combobox>
+            </v-col>
+
+            <v-col class="col-4">
+              <v-btn 
+                tile color="primary"
+                elevation="1"
+                rounded
+                :loading="msg_loading"
+                @click="onSendBtn()">
+                <v-icon left>mdi-send</v-icon>
+                <span>Send Message</span>
+              </v-btn>
+            </v-col>
+          </v-row>
+
+          <v-row class="justify-center">
+            <audio id="result_audio" src="" controls></audio>
+          </v-row>
+        </v-container>
+      </v-main>
+    </v-app>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script>
+    const BASE_URL = "http://localhost:1090/text-to-speech/api/v1/";
+
+    new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+
+      data:() => ({
+        // const
+        voice_loading: false,
+        msg_loading: false,
+        voice_items:[],
+        voice_selected:"",
+        send_text:"",
+        send_text_samples:["送信テスト", "Send test"],
+      }),
+      methods: {
+        onSendBtn() {
+          let sendurl = `${BASE_URL}synthesize`;
+
+          // set voice query.
+          let voicemodel = this.voice_selected.name;
+          if (voicemodel) sendurl += `?voice=${voicemodel}`;
+
+          fetch(
+              sendurl,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  "text": this.send_text
+                })
+              }
+            )
+            .then(res => res.blob())
+            .then(data => {
+              result_audio.src = URL.createObjectURL(data);
+            })
+        },
+
+        onGetVoiceBtn() {
+          fetch(
+              `${BASE_URL}voices`, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json"
+                }
+              }
+            )
+            .then(res => res.json())
+            .then(json => {
+              console.log(json);
+              this.voice_items = json.voices;
+              this.voice_selected = this.voice_items[0];
+            })
+        },
+      },
+      mounted() {
+        console.log("vue mounted.");
+        // this.onGetVoiceBtn();
+      }
+    })
+
+    // let msg_text = document.getElementById("msg_text");
+    let result_audio = document.getElementById("result_audio");
+    result_audio.addEventListener("canplaythrough", () => {
+      console.log("audio canplaythrough")
+      result_audio.play();
+    });
+
+    // let voice_select = document.getElementById("voice_select");
+  </script>
+</body>
+
+</html>

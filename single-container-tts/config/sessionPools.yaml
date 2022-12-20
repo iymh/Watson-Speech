@@ -3,4 +3,4 @@ sessionPoolPolicies:
   PreWarmingPolicy:
   # UPDATE BELOW WITH MODELS USED
     - name: en-US_MichaelV3Voice
-    - name: fr-CA_LouiseV3Voice
+    - name: ja-JP_EmiV3Voice
